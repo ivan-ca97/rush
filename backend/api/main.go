@@ -36,7 +36,11 @@ func RushServer(port int, logDirectory string, jwtKey string, tokenExpirationTim
 
 	auth := middlewares.AuthenticationFactory(jwtKey, tokenExpirationTime)
 
-	db := rush_db.SetupDb()
+	db, err := rush_db.SetupDb()
+	if err != nil {
+		panic("DB eror")
+	}
+
 	repositories := repositories.RushRepositories{Db: db}
 	services := services.RushServices{Repositories: &repositories}
 	controllers := controllers.RushControllers{Services: &services}
@@ -55,7 +59,10 @@ func RushServer(port int, logDirectory string, jwtKey string, tokenExpirationTim
 		r.Use(auth.AuthenticationContext)
 		r.Get("/authentication/check", check)
 		r.Get("/heartbeat", getHeartbeat)
-		r.Get("/members", getHeartbeat)
+
+		r.Post("/person", controllers.CreatePerson)
+		r.Get("/person/{id}", controllers.GetPersonById)
+		r.Patch("/person/{id}", controllers.UpdatePerson)
 	})
 
 	address := fmt.Sprintf(":%d", port)

@@ -25,5 +25,5 @@ func main() {
 	logDirectory := os.Getenv("LOGS_DIRECTORY")
 	jwtKey := os.Getenv("JWT_KEY")
 
-	api.RushServer(port, logDirectory, jwtKey, time.Minute*5)
+	api.RushServer(port, logDirectory, jwtKey, time.Hour*2400)
 }

@@ -9,7 +9,7 @@ func (rr *RushRepositories) GetUserByUsername(username string) (*models.User, er
 
 	query := rr.Db.
 		Table("users").
-		Where("id = ?", username).
+		Where("username = ?", username).
 		Find(&user)
 
 	if query.Error != nil {

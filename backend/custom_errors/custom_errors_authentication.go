@@ -12,3 +12,7 @@ type AuthenticationError struct {
 func (e *AuthenticationError) Error() string {
 	return fmt.Sprintf("Error %d: %s", e.Code, e.Message)
 }
+
+func (e *AuthenticationError) StatusCode() int {
+	return e.Code
+}
