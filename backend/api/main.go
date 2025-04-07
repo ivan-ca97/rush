@@ -60,6 +60,11 @@ func RushServer(port int, logDirectory string, jwtKey string, tokenExpirationTim
 		r.Get("/authentication/check", check)
 		r.Get("/heartbeat", getHeartbeat)
 
+		r.Post("/groups", controllers.CreateGroup)
+		r.Get("/groups", controllers.GetAllGroups)
+		r.Get("/groups/{id}", controllers.GetGroupById)
+		r.Patch("/groups/{id}", controllers.UpdateGroup)
+
 		r.Post("/person", controllers.CreatePerson)
 		r.Get("/person/{id}", controllers.GetPersonById)
 		r.Patch("/person/{id}", controllers.UpdatePerson)

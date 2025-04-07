@@ -16,6 +16,11 @@ type RushRepositoriesInterface interface {
 	GetPersonById(id uuid.UUID) (*models.Person, error)
 	CreatePerson(person models.Person) (*models.Person, error)
 	UpdatePerson(person models.Person) (*models.Person, error)
+
+	GetAllGroups(limit int, offset int) ([]models.Group, error)
+	GetGroupById(id uuid.UUID) (*models.Group, error)
+	CreateGroup(group models.Group) (*models.Group, error)
+	UpdateGroup(group models.Group) (*models.Group, error)
 }
 
 type RushRepositories struct {

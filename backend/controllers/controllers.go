@@ -21,6 +21,11 @@ type RushControllersInterface interface {
 	GetPersonById(w http.ResponseWriter, r *http.Request)
 	CreatePerson(w http.ResponseWriter, r *http.Request)
 	UpdatePerson(w http.ResponseWriter, r *http.Request)
+
+	GetAllGroups(w http.ResponseWriter, r *http.Request)
+	GetGroupById(w http.ResponseWriter, r *http.Request)
+	CreateGroup(w http.ResponseWriter, r *http.Request)
+	UpdateGroup(w http.ResponseWriter, r *http.Request)
 }
 
 type RushControllers struct {

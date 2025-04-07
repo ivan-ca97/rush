@@ -14,6 +14,11 @@ type RushServicesInterface interface {
 	GetPersonById(id uuid.UUID) (*dto.PersonGetResponse, error)
 	CreatePerson(body dto.PersonCreateBody) (*dto.PersonCreateResponse, error)
 	UpdatePerson(id uuid.UUID, body dto.PersonUpdateBody) (*dto.PersonUpdateResponse, error)
+
+	GetAllGroups(pageNumber int, pageSize int) (*dto.GetAllGroupsResponse, error)
+	GetGroupById(id uuid.UUID) (*dto.GetGroupByIdResponse, error)
+	CreateGroup(body dto.CreateGroupBody) (*dto.CreateGroupResponse, error)
+	UpdateGroup(id uuid.UUID, body dto.UpdateGroupBody) (*dto.UpdateGroupResponse, error)
 }
 
 type RushServices struct {
