@@ -19,7 +19,7 @@ func (rc *RushControllers) Login(w http.ResponseWriter, r *http.Request) {
 	authentication := middlewares.GetAuthFromContext(r)
 	loginResponse, err := rc.Services.Login(loginBody, *authentication)
 	if err != nil {
-		handleError(w, err)
+		rc.HandleError(w, err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -40,7 +40,7 @@ func (rc *RushControllers) Register(w http.ResponseWriter, r *http.Request) {
 	authentication := middlewares.GetAuthFromContext(r)
 	registerResponse, err := rc.Services.Register(registerBody, *authentication)
 	if err != nil {
-		handleError(w, err)
+		rc.HandleError(w, err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")

@@ -2,20 +2,12 @@ package controllers
 
 import (
 	"encoding/json"
-	"io"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/google/uuid"
 	"github.com/ivan-ca97/rush/backend/dto"
 )
-
-func caca(body io.ReadCloser, myVar any) {
-	err := json.NewDecoder(body).Decode(myVar)
-	if err != nil {
-		return
-	}
-}
 
 func (rc *RushControllers) GetPersonById(w http.ResponseWriter, r *http.Request) {
 	id, err := uuid.Parse(chi.URLParam(r, "id"))
@@ -25,7 +17,7 @@ func (rc *RushControllers) GetPersonById(w http.ResponseWriter, r *http.Request)
 
 	personGetByIdResponse, err := rc.Services.GetPersonById(id)
 	if err != nil {
-		handleError(w, err)
+		rc.HandleError(w, err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -45,7 +37,7 @@ func (rc *RushControllers) CreatePerson(w http.ResponseWriter, r *http.Request) 
 
 	personCreateResponse, err := rc.Services.CreatePerson(personCreateBody)
 	if err != nil {
-		handleError(w, err)
+		rc.HandleError(w, err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -70,7 +62,7 @@ func (rc *RushControllers) UpdatePerson(w http.ResponseWriter, r *http.Request) 
 
 	personUpdateResponse, err := rc.Services.UpdatePerson(id, personUpdateBody)
 	if err != nil {
-		handleError(w, err)
+		rc.HandleError(w, err)
 	}
 
 	w.Header().Set("Content-Type", "application/json")

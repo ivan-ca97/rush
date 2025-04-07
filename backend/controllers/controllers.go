@@ -1,16 +1,20 @@
 package controllers
 
 import (
-	"encoding/json"
-	"errors"
-	"log"
 	"net/http"
 
-	"github.com/ivan-ca97/rush/backend/custom_errors"
 	"github.com/ivan-ca97/rush/backend/services"
 )
 
+type ControllersBasic interface {
+	GetPaginationParameters(request *http.Request) (pageNumber int, pageSize int, err error)
+	EncodeResponse(w http.ResponseWriter, response any) error
+	HandleError(writer http.ResponseWriter, err error)
+}
+
 type RushControllersInterface interface {
+	ControllersBasic
+
 	Login(w http.ResponseWriter, r *http.Request)
 	Register(w http.ResponseWriter, r *http.Request)
 
@@ -24,17 +28,3 @@ type RushControllers struct {
 }
 
 var _ RushControllersInterface = &RushControllers{}
-
-func handleError(w http.ResponseWriter, err error) {
-	var expectedErr custom_errors.ExpectedError
-
-	if errors.As(err, &expectedErr) {
-		w.WriteHeader(expectedErr.StatusCode())
-		json.NewEncoder(w).Encode(expectedErr)
-		return
-	}
-
-	log.Printf("Unexpected error: %v", err)
-	w.WriteHeader(http.StatusInternalServerError)
-	json.NewEncoder(w).Encode(map[string]string{"message": "Internal Server Error"})
-}
